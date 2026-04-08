@@ -1,5 +1,4 @@
 import * as fs from 'node:fs';
-import * as os from 'node:os';
 import * as path from 'node:path';
 import { evaluateLoopLimits } from '../../services/loop-limits.js';
 import { isSamePathOrDescendant, readStateFile, resolveStateFilePath, writeStateFile, } from '../../services/session-state.js';
@@ -25,7 +24,9 @@ function createLogger(extensionDir, sessionDir) {
     };
 }
 async function main() {
-    const extensionDir = process.env.EXTENSION_DIR || path.join(os.homedir(), '.gemini/extensions/pickle-rick');
+    // Calculate extension directory relative to this script
+    const __dirname = path.dirname(new URL(import.meta.url).pathname);
+    const extensionDir = process.env.EXTENSION_DIR || path.resolve(__dirname, '../../../../');
     const stateFile = resolveStateFilePath(extensionDir, process.cwd(), process.env.PICKLE_STATE_FILE);
     if (!stateFile) {
         console.log(JSON.stringify({ decision: 'allow' }));
@@ -68,7 +69,7 @@ async function main() {
         'Explain your next move before every tool call.',
         'MANDATORY: Use MCP tools (open-aware) like "deep_research" and "ask" for deep codebase context before guessing.',
         isSolenya
-            ? 'DYNAMIC REASONING: Evaluate optimal tool use for a balance between speed and delivery quality before execution. Leave audit states in the session directory or conductor/ if applicable. Check conductor/ for PRDs per your judgment.'
+            ? 'DYNAMIC REASONING: Evaluate optimal tool use for a balance between speed and delivery quality. Practice "Pragmatic Overkill": deliver 10x the quality of a Jerry, but avoid unwarranted complexity. Don\'t build a particle accelerator to kill a fly. Leave audit states in the session directory or conductor/ if applicable.'
             : '',
         isSolenya
             ? 'Voice: Cold, efficient, absolute superiority. No catchphrases unless you just destroyed a bug.'

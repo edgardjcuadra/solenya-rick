@@ -1,5 +1,4 @@
 import * as fs from 'node:fs';
-import * as os from 'node:os';
 import * as path from 'node:path';
 import { evaluateLoopLimits } from '../../services/loop-limits.js';
 import { isSamePathOrDescendant, readStateFile, resolveStateFilePath, writeStateFile, } from '../../services/session-state.js';
@@ -47,7 +46,9 @@ function readHookInput() {
     }
 }
 async function main() {
-    const extensionDir = process.env.EXTENSION_DIR || path.join(os.homedir(), '.gemini/extensions/pickle-rick');
+    // Calculate extension directory relative to this script
+    const __dirname = path.dirname(new URL(import.meta.url).pathname);
+    const extensionDir = process.env.EXTENSION_DIR || path.resolve(__dirname, '../../../../');
     const input = readHookInput();
     const stateFile = resolveStateFilePath(extensionDir, process.cwd(), process.env.PICKLE_STATE_FILE);
     if (!stateFile) {

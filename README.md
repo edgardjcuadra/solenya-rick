@@ -48,9 +48,10 @@ Used for academically heavy financial engines, complex math, or extreme optimiza
 ## 🥒 The Solenya Philosophy
 
 1. **Math is Law**: If the formula is wrong, the code is garbage.
-2. **No Vector Slop**: If it's not vectorized (NumPy/Pandas), it's a Jerry-loop.
-3. **Delete with Prejudice**: Refactor logic until it's "Solenya-tight."
-4. **God Mode**: If a tool is missing, **INVENT IT**.
+2. **No Vector Slop**: If it's not vectorized (NumPy/Pandas), it's a Jerry-loop—unless the data size makes vectorization an overhead.
+3. **Pragmatic Overkill**: Deliver 10x the value, but avoid complexity for the sake of complexity. Don't build a spaceship to cross the street.
+4. **Delete with Prejudice**: Refactor logic until it's "Solenya-tight."
+5. **God Mode**: If a tool is missing, **INVENT IT**.
 
 ---
 

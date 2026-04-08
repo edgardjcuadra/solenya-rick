@@ -9,36 +9,39 @@ It transforms the "Pickle Rick" persona from a manic engineer into **Solenya**�
 
 ---
 
-## 🚀 Key Upgrades (Solenya Protocol)
+## 🎭 The Solenya Persona
+When the `--solenya` flag is active, the agent sheds its manic energy and "Pickle Rick" catchphrases. It adopts the persona of **Solenya**:
+- **Voice**: Cold, clinical, and absolutely superior.
+- **Behavior**: No stuttering. No mercy. No chitchat.
+- **Goal**: Total optimization and mathematical correctness.
 
-### 1. 🧠 Dynamic Tool Reasoning
-Unlike standard agents that guess, Solenya Rick **calculates** the optimal tool for every sub-task. It balances **speed** and **delivery quality** by analyzing the repo via MCP before acting.
-
-### 2. 📚 Academic Research Tetrad
-Solenya Rick is optimized for **financial engineering** and **scientific research**:
-- **Exa Integration**: Deep-dives into arXiv, academic journals, and technical documentation.
-- **Symbolic Verification**: Utilizes `sympy` to symbolically verify formulas (SDEs, ODEs, etc.) before implementation. No "Jerry-math" allowed.
-- **Numerical Stability**: Explicitly checks for overflow, underflow, and precision issues in Python-based Monte Carlo or Gaussian processes.
-
-### 3. 🔄 Ralph-Style Reflexion Loop
-Implements a stateless-but-persistent feedback loop:
-- **Git-as-Memory**: Persists state across iterations via the filesystem and Git history.
-- **Auto-Correction**: If the internal "Reflexion" phase detects unvectorized slop or mathematical errors, it outputs `[RETRY_ITERATION]` and restarts the loop automatically with feedback.
-- **Acceptance-Driven**: The loop only terminates when the "Completion Promise" is satisfied and all quality gates pass.
-
-### 4. 🔗 MCP & Conductor Integration
-- **Open-Aware**: Uses `deep_research` and `ask` for high-fidelity codebase mapping.
-- **Conductor Sync**: Audits every state transition in `conductor/` and pulls PRDs directly from track definitions per its own god-tier judgment.
-- **Temporary Specs**: Uses `${SESSION_ROOT}/temp_spec.md` as a scratchpad for architectural reasoning before tickets are even created.
+### What Solenya Unlocks:
+1.  **🧠 Dynamic Tool Reasoning**: Evaluates every tool call for a balance between speed and delivery quality. It doesn't just use tools; it calculates the optimal path.
+2.  **📚 Academic Research Tetrad**: Unlocks the `academic-researcher` skill. Uses Exa to deep-dive into arXiv/Journals and **SymPy** to symbolically verify formulas before implementation.
+3.  **🔄 Ralph-Style Reflexion**: Implements a self-correction loop. If numerical instability or unvectorized slop is detected, it outputs `[RETRY_ITERATION]` to automatically reset and fix the logic.
+4.  **🔗 Conductor Audit**: Leaves a reasoning trace and state audit in `conductor/` or session logs.
 
 ---
 
-## 🛠️ Commands
+## 🛠️ Usage & Differentiation
 
-- **`/pickle <prompt> --solenya`**: Activates the Solenya Mode. Concise, stutter-free, and hyper-efficient.
-- **`/pickle-prd`**: Drafts a PRD (or pulls from Conductor) to start a session.
-- **`/add-to-pickle-jar`**: Queues tasks for batch execution.
-- **`/pickle-jar-open`**: Executes the entire queue via Solenya workers.
+The base extension remains the same, but the `--solenya` flag flips the internal "God Mode" switch.
+
+### 1. Normal Pickle Rick (The "Manic" Mode)
+Used for standard engineering tasks where you want the classic Rick & Morty energy.
+```bash
+/pickle "Add a dark mode toggle to the UI"
+```
+- **Visual**: Green panel, 🥒 icon.
+- **Persona**: Manic, stuttering, calls you Morty.
+
+### 2. Solenya Rick (The "God" Mode)
+Used for academically heavy financial engines, complex math, or extreme optimization.
+```bash
+/pickle "Implement a Heston Model Monte Carlo simulation" --solenya
+```
+- **Visual**: Red panel, 🔪 icon.
+- **Persona**: Cold, efficient, Solenya-tight execution.
 
 ---
 

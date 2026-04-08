@@ -55,10 +55,38 @@ Used for academically heavy financial engines, complex math, or extreme optimiza
 
 ---
 
+## 🛠️ Prerequisites & Dependencies
+
+To unlock the full potential of the **Solenya Protocol**, your environment must not be a digital dumpster fire. Ensure the following are installed:
+
+### 1. Core Runtime
+- **Node.js**: `v18.x`+ and **NPM**: `v9.x`+ (Required for the extension engine).
+- **Git**: `v2.x`+ (Required for the Ralph-Style persistence loop).
+
+### 2. Academic & Financial Brain (Python)
+The `academic-researcher` skill requires a Python environment with mathematical libraries.
+- **Python**: `v3.10`+
+- **Pip Install**:
+  ```bash
+  pip install sympy numpy pandas pydantic hypothesis
+  ```
+  - `sympy`: Symbolic math verification (The "Not-a-Jerry" tool).
+  - `numpy`/`pandas`: Numerical vectorization.
+  - `pydantic`/`hypothesis`: Validation and stochastic testing.
+
+### 3. Digital Sight (MCP)
+Solenya Rick requires active MCP connections to see the multiverse:
+- **Open-Aware MCP**: For deep codebase mapping.
+- **Exa MCP**: For the Academic Tetrad research (arXiv/Journals).
+
+---
+
 ## 📦 Installation
 
 ```bash
 gemini extensions install https://github.com/edgardjcuadra/solenya-rick
 ```
+
+---
 
 Wubba Lubba Dub Dub! 🥒 *belch* Now go build something that isn't embarrassing.

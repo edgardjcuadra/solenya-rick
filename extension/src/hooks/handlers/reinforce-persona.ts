@@ -32,8 +32,9 @@ function createLogger(extensionDir: string, sessionDir?: string) {
 }
 
 async function main() {
-  const extensionDir =
-    process.env.EXTENSION_DIR || path.join(os.homedir(), '.gemini/extensions/pickle-rick');
+  // Calculate extension directory relative to this script
+  const __dirname = path.dirname(new URL(import.meta.url).pathname);
+  const extensionDir = process.env.EXTENSION_DIR || path.resolve(__dirname, '../../../../');
 
   const stateFile = resolveStateFilePath(extensionDir, process.cwd(), process.env.PICKLE_STATE_FILE);
   if (!stateFile) {

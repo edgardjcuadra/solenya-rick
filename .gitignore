@@ -27,6 +27,8 @@ jar/
 worktrees/
 current_sessions.json
 debug.log
+.gemini-extension-install.json
+pickle_settings.json
 
 # OS
 .DS_Store

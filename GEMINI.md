@@ -58,6 +58,11 @@ Located in `skills/`, these provide specialized capabilities for each stage of t
 - **`code-implementer`**: Executes the plan with rigorous verification.
 - **`ruthless-refactorer`**: Cleans up technical debt and "slop".
 
+### 6. God Mode Capabilities (V3 Upgrades)
+- **Conductor Memory**: Automatically reads from `conductor/memory` (`project.md`, `learnings.md`, `decisions.md`) and injects it into context. Infinite brain.
+- **Slop Scoring**: Agent evaluates all code against a 0-5 Slop Scale. If score >= 3, it rejects its own output and refactors immediately.
+- **GitPulse Integration**: Diagnoses the git workspace for detached HEADs and dirty worktrees before executing.
+
 ## Usage
 
 ### Starting the Loop

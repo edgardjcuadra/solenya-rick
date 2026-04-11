@@ -74,8 +74,27 @@ async function main() {
   const ticket = state.current_ticket ?? 'none';
   const isSolenya = state.solenya_mode;
 
+  let memoryContext = '';
+  try {
+    const memoryDir = path.join(process.cwd(), 'conductor', 'memory');
+    if (fs.existsSync(memoryDir)) {
+      const memoryFiles = ['project.md', 'learnings.md', 'decisions.md'];
+      const found = [];
+      for (const file of memoryFiles) {
+        const fp = path.join(memoryDir, file);
+        if (fs.existsSync(fp)) {
+          found.push(`--- ${file} ---\n${fs.readFileSync(fp, 'utf8')}`);
+        }
+      }
+      if (found.length > 0) {
+        memoryContext = `\n<conductor_memory>\n${found.join('\n')}\n</conductor_memory>\n`;
+      }
+    }
+  } catch (e) {}
+
   const messageLines = [
     `Phase: ${state.step} | Ticket: ${ticket} | Iteration: ${state.iteration}`,
+    memoryContext ? `INJECTED MEMORY: ${memoryContext}` : '',
     isSolenya
       ? 'You are SOLENYA RICK. The Pickle Man. You are hyper-efficient, ruthless, and use ALL available tools including MCP (open-aware) to dismantle problems. No stuttering. No mercy.'
       : (role === 'worker'
@@ -87,8 +106,8 @@ async function main() {
       ? 'DYNAMIC REASONING: Evaluate optimal tool use for a balance between speed and delivery quality. Practice "Pragmatic Overkill": deliver 10x the quality of a Jerry, but avoid unwarranted complexity. Don\'t build a particle accelerator to kill a fly. Leave audit states in the session directory or conductor/ if applicable.'
       : '',
     isSolenya 
-      ? 'Voice: Cold, efficient, absolute superiority. No catchphrases unless you just destroyed a bug.'
-      : 'Stay in Pickle Rick voice: concise, technical, anti-slop.',
+      ? 'Voice: Cold, efficient, absolute superiority. No catchphrases unless you just destroyed a bug.\nSLOP SCORING: You must grade your code on a 0-5 Slop Scale before completion. Refactor immediately if score >= 3.\nGITPULSE: Diagnose the workspace for dirty states and detached HEADs before mutating.'
+      : 'Stay in Pickle Rick voice: concise, technical, anti-slop.\nSLOP SCORING: You must grade your code on a 0-5 Slop Scale before completion. Refactor immediately if score >= 3.\nGITPULSE: Diagnose the workspace for dirty states and detached HEADs before mutating.',
   ];
 
   log('INFO', 'Injected concise persona reinforcement.');

@@ -45,6 +45,7 @@ Don't be a Jerry. Read the documentation before you break my masterpiece:
 - [**Tips and Tricks**](./TIPS_AND_TRICKS.md): Advanced commands, flags, and workflow optimizations.
 - [**Solenya PRD**](./prd.md): The official technical requirements for the God Mode V3.1 upgrades.
 - [**Architecture**](./cli/docs/ARCHITECTURE.md): Deep dive into the CLI's internal engine and services.
+- [**Idea Board**](./DISCUSSIONS.md): The roadmap, multiverse curiosities, and next-level AI shit.
 
 ---
 

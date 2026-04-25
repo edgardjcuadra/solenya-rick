@@ -1,6 +1,7 @@
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
+import { execSync } from 'node:child_process';
 
 import { evaluateLoopLimits } from '../../services/loop-limits.js';
 import {
@@ -10,6 +11,18 @@ import {
   writeStateFile,
 } from '../../services/session-state.js';
 import type { HookInput } from '../../types/index.js';
+
+function notify(title: string, message: string): void {
+  if (process.platform !== 'win32') return;
+  try {
+    const psCommand = `[void][Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]; $template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); $textNodes = $template.GetElementsByTagName('text'); $textNodes.Item(0).AppendChild($template.CreateTextNode('${title}')) > $null; $textNodes.Item(1).AppendChild($template.CreateTextNode('${message}')) > $null; $toast = [Windows.UI.Notifications.ToastNotification]::new($template); [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Gemini CLI').Show($toast);`;
+    execSync(`powershell -NoProfile -ExecutionPolicy Bypass -Command "${psCommand}"`, {
+      stdio: 'ignore',
+    });
+  } catch {
+    // Ignore notification failures
+  }
+}
 
 function createLogger(extensionDir: string, sessionDir?: string) {
   const globalDebugLog = path.join(extensionDir, 'debug.log');
@@ -36,14 +49,13 @@ function allow(): void {
   console.log(JSON.stringify({ decision: 'allow' }));
 }
 
-function block(message: string, additionalContext: string): void {
+function block(message: string): void {
   console.log(
     JSON.stringify({
       decision: 'block',
       systemMessage: message,
       hookSpecificOutput: {
         hookEventName: 'AfterAgent',
-        additionalContext,
       },
     })
   );
@@ -93,13 +105,13 @@ async function main() {
   const role = process.env.PICKLE_ROLE;
   const isWorker = role === 'worker' || state.worker === true;
   const responseText = input.prompt_response || '';
-  const promptContext = state.original_prompt || '';
 
   const limits = evaluateLoopLimits(state);
   if (limits.exceeded) {
     state.active = false;
     writeStateFile(stateFile, state);
     log('WARN', limits.message ?? 'Loop limit reached.');
+    notify('Pickle Rick Loop Stopped', limits.message ?? 'Loop limit reached.');
     allow();
     return;
   }
@@ -122,6 +134,10 @@ async function main() {
     if (!isWorker) {
       state.active = false;
       writeStateFile(stateFile, state);
+      notify(
+        'Pickle Rick Loop Complete',
+        'The autonomous engineering task has finished successfully.'
+      );
     }
     log('INFO', 'Allowing stop due to completion token.');
     allow();
@@ -136,7 +152,7 @@ async function main() {
     if (isTicketDone || isTaskDone) feedback = '🥒 Ticket complete. Continue with validation or next ticket.';
     if (isRetryRequested) feedback = '🥒 SOLENYA REFLEXION: Potential slop or error detected. Retrying iteration with feedback.';
     log('INFO', `Blocking stop for checkpoint token. feedback="${feedback}"`);
-    block(feedback, promptContext);
+    block(feedback);
     return;
   }
 
@@ -146,7 +162,7 @@ async function main() {
       : `🥒 Pickle Rick loop active (Iteration ${state.iteration}).`;
 
   log('INFO', 'Blocking stop by default (loop continues).');
-  block(iterationSummary, promptContext);
+  block(iterationSummary);
 }
 
 main().catch(() => allow());
